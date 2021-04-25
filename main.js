@@ -1,10 +1,13 @@
 const slides = document.querySelectorAll(".slide");
 const indicatorsContainer = document.querySelector("#indicators-container");
-
 const indicators = document.querySelectorAll(".indicator");
 const pauseBtn = document.querySelector("#pause");
 const prevBtn = document.querySelector("#prev");
 const nextBtn = document.querySelector("#next");
+
+const CODE_SPACE = "Space";
+const CODE_ARROW_LEFT = "ArrowLeft";
+const CODE_ARROW_RIGHT = "ArrowRight";
 
 let slidesCount = slides.length;
 let currentSlide = 0;
@@ -49,12 +52,6 @@ function play() {
 
 const pausePlay = () => (isPlaying ? pause() : play());
 
-pauseBtn.addEventListener('click', pausePlay);
-prevBtn.addEventListener('click', prev);
-nextBtn.addEventListener('click', next);
-
-timerID = setInterval(nextSlide, 1000);
-
 function handler(e) {
   const target = e.target;
 
@@ -65,4 +62,21 @@ function handler(e) {
   }
 }
 
+function pressKey(e) {
+console.log(e);
+if (e.code === CODE_ARROW_LEFT) prev();
+if (e.code === CODE_ARROW_RIGHT) next();
+if (e.code === CODE_SPACE) pausePlay();
+
+}
+
+pauseBtn.addEventListener('click', pausePlay);
+prevBtn.addEventListener('click', prev);
+nextBtn.addEventListener('click', next);
 indicatorsContainer.addEventListener('click', handler);
+document.addEventListener('keydown', pressKey);
+
+
+timerID = setInterval(nextSlide, 1000);
+
+
